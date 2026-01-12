@@ -1,0 +1,9 @@
+.env configuration
+
+-> it stores environment-specific secrets and settings which can be vary when staging, local, production.
+-> it lives on root folder and it is like secrets/passwords of api keys 
+-> local DB/password != production DB/password that's why env requires for managing these stages.
+-> .env -> config -> app [Laravel loads .env once then uses config/ || App checks config not .env]
+-> after modifying .env must clean cache/config/restart
+-> .env should always stays inside on .gitignore
+-> .env processed on config/*.php files

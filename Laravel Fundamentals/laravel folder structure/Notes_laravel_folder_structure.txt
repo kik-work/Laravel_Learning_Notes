@@ -1,0 +1,37 @@
+Learning on prerequisites.
+
+1. Laravel folder structure: 
+  
+   app/ -> Application logic(Brain)
+          (controller/models/middleware/requests/) ~ (decision/ database table/security guards(gatekeeper)/validations brain(data checker))
+          [controller/ -> takes request, decides what to do and talks to models][models/ -> talks to database || ~ table] 
+          [middleware/ -> runs before controller || checks auth,role,permissions][requests/ validates request data || keeps controller clean] 
+
+   routes/ -> Request Router
+             decides which request goes where || returns views(html/json)
+             [web.php/api.php -> api calls handled with controller methods]
+
+   database/ -> Database Layer
+               (migration/seeder) ~ (structure/data)
+               [migration/ -> create/update tables || ~ table structure] [seeder/ -> fake/initial data || sample data]
+
+   resources/ -> (views/)~ UI layer
+                 [views contains blade files .blade.php] || response that will user/client see]
+
+   config/ -> App Rules
+              (app settings || Database, mail, cache config) 
+              [how app will behave deals with rules on config]
+
+   public/ -> (entry point || images, css, js) 
+              [entry point exists here with index.php]
+
+   storage/ -> (warehouse || log, cache, storage files) 
+               [generated files comes on this folder]
+   vendor/ -> (Laravel core, packages) || Laravel framework
+              [tools that Laravel holds are here, better not to touch this]
+   .env -> DB passwords || API Keys || Environment Settings (secrets || never share github)
+
+Request flow:
+browser/postman -> routes -> controller -> model -> database -> response (json/view)
+
+memorise: Routes map URLs, controllers handle logic, models talk to DB, migrations define tables, views show UI, middleware secures requests, config controls behavior, storage stores generated files, vendor holds framework code.

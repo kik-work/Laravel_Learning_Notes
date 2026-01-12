@@ -1,0 +1,37 @@
+artisan commands: 
+-> command line interface(CLI) that does stuff for me automatically 
+ 
+ * to see all commands that php Laravel holds (Menu) 
+    -> php artisan list
+
+ * Make Commands: (it makes these files automatically)
+    -> to create a new controller : php artisan make:controller DemoController
+    -> to create a new model : php artisan make:model DemoModel
+    -> to create a new migration: php artisan make:migration DemoMigration (create demo table)
+    -> to create a new seeder : php artisan make:seeder DemoSeeder
+    -> to create a new middleware : php artisan make:middleware CheckDemoAuthenticatedPerson
+    -> to create a new form request : php artisan make:request DemoformRequest
+
+ * Database / migration commands: 
+  -> for running migrations (create/update DB tables)         = php artisan migrate
+  -> for undoing last migrations                              = php artisan migrate:rollback
+  -> dropping all tables and running all migrations           = php artisan migrate:fresh 
+  -> running seeders to fill DB with sample data              = php artisan db:seed
+  -> rollback + migrate + seed                                = php artisan migrate:refresh --seed
+ 
+ * Cache & Config Commands (speed booster + fix weird issues)
+ -> to cache config files(faster app)       = php artisan config:cache
+ -> Cache routes for performance            = php artisan route:cache
+ -> Clear compiled blade files              = php artisan view:clear 
+ -> clearing app cache                      = php artisan cache:clear 
+
+ * Server Command (local dev)
+ -> starting Laravel playground = php artisan serve
+ 
+ * Additional
+ -> interactive shell to test PHP+models                = php artisan tinker
+ -> shows all routes + methods + controllers            = php artisan route:list
+ -> for generating app_key for encryption               = php artisan key:generate
+ -> token that identifies the user without login flow   = php artisan passport:client --personal
+
+“Make → Build, Migrate → Table, Seed → Fill, Cache → Speed, Serve → Play, Tinker → Test”

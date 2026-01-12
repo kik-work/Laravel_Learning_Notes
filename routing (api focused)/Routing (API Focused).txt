@@ -1,0 +1,89 @@
+Routing (API Focused)
+
+ * API Route File (routes/api.php)
+  -> All routes in api.php automatically get /api/ prefix
+  -> A default stateless server means it does not remember anything between requests—each request is independent, and no sessions or cookies are stored.
+
+ * HTTP Methods
+  -> GET (READ)
+     Route::get('/users', [UserController::class, 'index']);
+     - calls index method in UserController 
+     - returns JSON response
+     - reads data (fetching) 
+
+  -> POST (CREATE)
+     Route::post('/users', [UserController::class, 'store']); 
+     - calls store method in UserController 
+     - returns JSON response if api calls and redirects if web.php
+     - send new data to database (Creation)
+
+  -> PUT (updates entire resource) (REPLACE)
+     Route::put('/users/{id}', [UserController::class, 'update']); 
+     - calls update method in UserController 
+     - Replaces all fields of user with ID.
+     - Fields not included may get reset or removed depending on server logic.
+
+  -> PATCH (updates only certain fields of a resource) (PARTIAL)
+     Route::patch('/users/{id}', [UserController::class, 'update']); 
+     - Replaces only specific fields/one field/all fields of user with ID.
+     - Only sent fields are updated.
+
+  -> DELETE (Removes)
+     Route::delete('/users/{id}', [UserController::class, 'destroy']);
+     - calls destroy method in UserController
+     - removes an entry from database
+     - can restore soft deletes by {User::withTrashed()->find($id)->restore();} 
+     - hard delete (even soft deletes exists) {User::withTrashed()->find($id)->forceDelete(); }
+     - Hard Delete{delete()}
+          > permanently deletes and can't recovered
+          > frees database space || bad for auditing, history and accidental deletes
+     - Soft Delete {softDeletes();}
+          > data isn't removed from database just hidden 
+          > deleted_at timestamp is set rows stays hidden from normal queries
+
+   * ROUTE Parameters
+      -> Route parameters are dynamic parts of a URL that allow us to pass values (like IDs, slugs, names) to our route/controller.
+
+      ROUTE parameters with controller:
+             Route::get('/users/{id}', [UserController::class, 'show']);
+             - here show method will be called inside UserController with {id}
+      ROUTE multiple parameters:
+             Route::get('/users/{user}/posts/{post}', function ($user, $post) {
+                        return "User $user, Post $post";  });
+             - here multiple parameter like {user} && {post} passes
+      ROUTE optional parameters: 
+             Route::get('/users/{name?}', function ($name = 'Guest')
+             - here ? used which provides a default value 
+             - name may come and may not but if it doesn't come then it will use default assigned values
+             - optional parameter must be at the end
+      ROUTE parameter constraints
+             Route::get('/users/{id}', function ($id) {
+             return $id; })->where('id', '[0-9]+'); ->whereNumber('id'); ->whereAlpha('name'); ->whereAlphaNumeric('code');
+             - here specific limited values are allowed
+      
+   * ROUTE Groups & Prefix & Naming 
+     -> Route groups allows shared set up or settings to multiple routes at once like: URL Prefix, Middleware, Namespace, Name Prefix
+     -> avoids repeating and keeps endpoints clean and structured.
+     -> A prefix adds a common url path before all routes in the group
+     -> giving a route nickname not the urls
+     -> we use naming cause a URL can be changed any time but giving that nickname won't bother controllers and others.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+  
