@@ -1,0 +1,21 @@
+Database and Eloquent ORM
+
+* Migration
+  -> it is a blueprint of database table
+  -> this creates/updates database table's structure
+  -> migrate = build table
+
+*Eloquent ORM
+  -> Laravel's ORM
+  -> treats database's table as php object and php objects can be manipulative and we can save/update
+  -> makes queries super readable
+
+* Model
+  -> it talks with database 
+  -> it handles database tables
+  -> handle CRUD operations easily
+
+* Timestamps
+  -> Automatically handled if timestamps() in migration
+  -> Fields: created_at, updated_at
+  -> Updated automatically on create/update

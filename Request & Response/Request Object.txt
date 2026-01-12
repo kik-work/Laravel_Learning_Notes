@@ -1,0 +1,33 @@
+* Request Object 
+
+ -> Request is an instance which wraps all incoming HTTP data (GET, POST, headers, cookies, files)
+ -> a backpack the client sent is stored as one object
+   key points: 
+   $request->input('field') = reads input values
+   $request->all()= gets all input data as an array
+   $request->only(['name','age']) = specific inputs
+   $request->has('emails') = checks if field exists
+   
+* JSON Responses
+ -> response is a helper function it returns http response object
+ -> in api's we always return json objects: 
+return response()->json([
+    'status' => true,
+    'message' => 'User created successfully'
+], 201);
+first argument : data(array)
+second argument: HTTP status code
+
+
+* HTTP status code:
+| Status | Meaning      | Example                       |
+| ------ | ------------ | ----------------------------- |
+| 200    | OK / Success | GET, PUT, PATCH               |
+| 201    | Created      | POST                          |
+| 204    | No Content   | DELETE                        |
+| 400    | Bad Request  | Invalid input                 |
+| 401    | Unauthorized | Not logged in / token missing |
+| 403    | Forbidden    | Logged in but not allowed     |
+| 404    | Not Found    | Resource missing              |
+| 500    | Server Error | Unexpected crash              |
+

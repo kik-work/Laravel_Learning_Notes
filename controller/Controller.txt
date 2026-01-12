@@ -1,0 +1,10 @@
+* Controller
+ => Receives requests from routes and decides what to do like calling models/ returning responses
+
+ -> Resource Controller
+    - it provides all CRUD methods (index, store, update, show, destroy)
+    - Route::apiResource('users', UserController::class);
+ -> Single action controller
+    - it is used for dedicated task like one individual index or destroy purposes
+    - controller with one action and does only one thing like login/logout
+    - Route::post('users', UserController::class);
