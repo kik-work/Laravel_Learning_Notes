@@ -1,0 +1,27 @@
+Validation
+
+* Request Validation
+
+  -> its like a security guard to enter app
+  -> a dedicated request class to check authentic data inputs
+  -> reusable validation + messages + authorization
+  -> Controller stays clean, validation moves to its own room.
+  -> required | type | format | size | exists/unique
+  -> exists = must belong  || unique = must be new
+  -> Rule	Meaning
+     required	Field must be present and not empty
+     nullable	Field may be null
+     sometimes	Validate only if field exists
+     required_if	Required if another field has value
+     required_unless	Required unless another field has value
+     email:rfc,dns	Strict email
+     regex:/pattern/	Regex validation
+     alpha	Only letters
+     alpha_num	Letters + numbers
+     alpha_dash	Letters, numbers, dashes
+     lowercase	Must be lowercase
+     uppercase	Must be uppercase
+
+  -> dates are treated as string in database but in eloquent it is carbon object
+  -> 'datetimecheck' => 'required|date'
+  -> 'datetimecheck' => 'required|date_format:Y-m-d H:i:s'
