@@ -1,7 +1,7 @@
 Routing (API Focused)
 
  * API Route File (routes/api.php)
-  -> All routes in api.php automatically get /api/ prefix
+  -> All routes in api.php automatically get /api/ prefix currently we need it to define from manually from route service provider
   -> A default stateless server means it does not remember anything between requests—each request is independent, and no sessions or cookies are stored.
 
  * HTTP Methods

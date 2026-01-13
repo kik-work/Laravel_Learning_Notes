@@ -29,9 +29,9 @@ artisan commands:
  -> starting Laravel playground = php artisan serve
  
  * Additional
- -> interactive shell to test PHP+models                = php artisan tinker
- -> shows all routes + methods + controllers            = php artisan route:list
- -> for generating app_key for encryption               = php artisan key:generate
- -> token that identifies the user without login flow   = php artisan passport:client --personal
-
+ -> interactive shell to test PHP+models                     = php artisan tinker
+ -> shows all routes + methods + controllers                 = php artisan route:list
+ -> for generating app_key for encryption                    = php artisan key:generate
+ -> token that identifies the user without login flow (api)  = php artisan passport:client --personal
+ -> to rebuild the class map to find classes for composer    = 
 “Make → Build, Migrate → Table, Seed → Fill, Cache → Speed, Serve → Play, Tinker → Test”
