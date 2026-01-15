@@ -1,0 +1,251 @@
+Learning Database Design
+
+Key Remembering:
+Who are the users? 
+What do they do?
+What must be stored forever?
+Quick Formula to Spot Entities
+Ask yourself for each noun:
+Can I store data about it?
+Will it have a unique identifier (PK)?
+Is it important for the system?
+If yes → entity
+“If you repeat data → split it into another table.”
+If you repeat data → split it ✅
+
+If a value can be derived from another table → don’t store it ✅
+
+Always check for uniqueness and dependency
+
+Use INT for IDs/counts, DECIMAL for money, FLOAT for approximate real numbers.
+Short, predictable strings → CHAR  Medium strings (most text fields) → VARCHAR Really long text → TEXT
+Use DATE for birthdays, DATETIME for events, TIMESTAMP for logs that auto-update.
+BOOLEAN / TINYINT(1)	True/False values	IsActive, IsPaid
+ENUM	Limited set of values	Status: ('Pending','Done','Canceled')
+Index what you search, keep keys small, remove repetition, and write efficient queries.
+
+what's this? does it need a table? no? then it's a column.
+
+* What is an Entity?
+
+An entity is a real-world object, person, place, event, or concept that you want to track in a database.
+
+Each entity usually becomes a table in your database.
+
+-> Steps to Identify Entities
+Look for nouns in requirements
+Decide if it needs to store data
+Check if it has attributes
+Attributes = information you store about an entity.
+Avoid confusion with relationships
+
+
+* What is an Attribute?
+
+An attribute is a piece of information about an entity.
+
+Think of it as a column in a table.
+
+Every entity has one or more attributes, and usually one attribute acts as the Primary Key (PK).
+
+types of attribute: 
+simple, composite, derived , multivalued, key attribute: PK/FK
+
+-> How to Identify Attributes
+
+Look at the entity → ask “What info do I need to store about this?”
+
+Check uniqueness → “Which attribute can uniquely identify this entity?” → becomes PK
+
+Include important details → “What other info is needed for operations?”
+
+Avoid redundant info → “Does this info come from another table?” → if yes, use FK instead
+
+* Primary Key:
+A PK should always be:
+
+Unique → No two rows can have the same value
+
+Not NULL → Every row must have a value
+
+Stable / Immutable → Should rarely or never change
+
+Simple → Single column is better than multiple columns (unless necessary)
+
+Minimal → No extra data, just what’s needed to identify the row
+
+types of PK: 
+natural key, surrogate key(auto incremented id), composite key.
+
+-> Steps to Choose a Primary Key
+
+Look at the entity → What uniquely identifies it?
+
+Student → student_id or roll_number
+
+Teacher → teacher_id or email
+
+Check stability → PK shouldn’t change over time
+
+Avoid using phone number or email as PK (they can change)
+
+Prefer a single column → Only use composite keys if necessary
+
+Use auto-increment IDs if unsure → Easy and safe
+
+
+* What is a Relationship?
+
+A relationship defines how two entities are linked.
+
+It usually uses Foreign Keys (FK) to connect tables.
+
+-> Types of Relationships
+One-to-One (1:1)
+One-to-Many (1:N)
+Many-to-Many (M:N)
+
+
+One-to-One (1:1)
+
+Use FK in one table pointing to PK in another.
+
+Optional depending on direction.
+
+One-to-Many (1:N)
+
+Most common type.
+
+FK goes in the “many” side table pointing to PK of the “one” side.
+
+Many-to-Many (M:N)
+
+Requires a junction table (also called a bridge table).
+
+This table stores FKs from both entities.
+
+Which side can have multiple records?” → That side holds the FK.
+
+
+* Normalization is the process of organizing tables and data to reduce redundancy (repeated data) and improve data integrity.
+
+Why Normalize?
+
+Avoid repeating the same data in multiple rows
+
+Easier to update (change once, effect everywhere)
+
+Prevent data inconsistency
+
+Makes database design cleaner and efficient
+
+Normal Forms (Basics)
+1NF → First Normal Form
+
+Each column must hold atomic values (no multiple values in one column)
+
+Each row must be unique"
+
+having multiple rows instead of having one column multiple values
+
+Second Normal Form (2NF) – “No Partial Dependency”
+
+Rule: Every column must depend fully on the primary key.
+
+Only applies if the table has a composite primary key.
+
+Third Normal Form (3NF) – “No Transitive Dependency”
+
+Rule: No column should depend on another non-primary column. Only depends directly on the PK.
+
+What is Data Integrity?
+
+Data Integrity ensures that the data in the database is accurate, consistent, and reliable.
+
+Without it, your database can have wrong, duplicate, or inconsistent data.
+
+-> types:
+ Entity Integrity = Each row must have a unique identifier (PK)
+ Referential Integrity =FK values must match a PK in another table
+ Domain Integrity =Column values must be valid and of correct type
+ User-defined Integrity=Custom rules for your business
+
+*Constraints in SQL
+PRIMARY KEY = Uniquely identifies each row
+FOREIGN KEY= Enforces relationships between tables
+NOT NULL=Column cannot be empty
+UNIQUE=Column values must be unique
+CHECK=Custom condition
+DEFAULT=Set default value if none provided
+
+*What is Database Performance?
+
+Performance measures how fast queries run and how efficiently the database handles reads/writes.
+
+Poor design → slow queries, delayed reports, unhappy users.
+
+Factors Affecting Performance
+| Factor                    | Explanation                                          |
+| ------------------------- | ---------------------------------------------------- |
+| **Table size**            | Huge tables → slower queries                         |
+| **Indexes**               | Helps database find data quickly                     |
+| **Joins & relationships** | Complex joins can slow queries                       |
+| **Redundant data**        | Repeating data → larger tables, slower updates       |
+| **Query design**          | Inefficient SQL → full table scans, slow performance |
+| **Hardware/DB config**    | Disk speed, RAM, cache settings                      |
+
+To improve performance:
+
+Use indexes on frequently searched columns (WHERE, JOIN)
+
+Use small, numeric primary keys (INT auto-increment)
+
+Normalize data to remove repetition, but avoid too many joins
+
+Choose proper data types (small size = faster)
+
+Avoid SELECT *, fetch only required columns
+
+Use batch inserts/updates instead of single rows
+
+Cache frequently used data when possible
+
+API & Application Usage – Short Note
+
+An API (Application Programming Interface) allows applications to communicate with each other by sending requests and receiving responses.
+
+In an application:
+
+The frontend (web/mobile app) sends requests to the API
+
+The API processes logic, validates data, and interacts with the database
+
+The database stores and retrieves data
+
+The API returns structured responses (usually JSON)
+
+Common API operations:
+
+GET → Read data
+
+POST → Create data
+
+PUT/PATCH → Update data
+
+DELETE → Remove data
+
+Best practices:
+
+Validate input at API level
+
+Use authentication & authorization
+
+Do not expose database directly to frontend
+
+Use pagination, caching, and rate limits for performance
+
+APIs should be stateless and secure
+
+Flow:
+
+User → Application → API → Database → API → Application
