@@ -1,0 +1,146 @@
+Laravel Eloquent Relationships & Eager Loading Cheat Sheet
+1. One-to-One Relationship
+
+Definition: A single record in one table is related to a single record in another table.
+
+Database Setup:
+
+Foreign key stored in one of the tables (usually the “child” table).
+
+Common Use Cases:
+
+User → Profile
+
+Post → PostDetail
+
+Eloquent Concept:
+
+hasOne → defines relationship from parent to child
+
+belongsTo → defines relationship from child to parent
+
+Notes:
+
+Access related record using $user->profile
+
+Reverse access: $profile->user
+
+2. One-to-Many Relationship
+
+Definition: A single record in one table relates to multiple records in another table.
+
+Database Setup:
+
+Foreign key stored in the “many” table
+
+Common Use Cases:
+
+User → Posts
+
+Category → Products
+
+Eloquent Concept:
+
+hasMany → parent to multiple children
+
+belongsTo → child to parent
+
+Notes:
+
+Access children: $category->products (returns collection)
+
+Access parent: $product->category
+
+3. Many-to-Many Relationship
+
+Definition: Multiple records in one table relate to multiple records in another table.
+
+Database Setup:
+
+Pivot table required (e.g., role_user)
+
+Contains foreign keys of both tables
+
+Common Use Cases:
+
+Users ↔ Roles
+
+Students ↔ Courses
+
+Eloquent Concept:
+
+belongsToMany → define in both models
+
+Notes:
+
+Access related records: $user->roles
+
+Pivot data: $user->roles->first()->pivot
+
+4. Polymorphic Relationships
+
+Definition: A model can belong to more than one other model on a single association.
+
+Types:
+
+One-to-One Polymorphic: Single model related to multiple other models
+
+Example: Image → User / Post
+
+One-to-Many Polymorphic: Multiple models relate to multiple types
+
+Example: Comment → Post / Video / Photo
+
+Database Setup:
+
+*_id and *_type columns (e.g., commentable_id, commentable_type)
+
+Eloquent Concept:
+
+morphOne, morphMany on the parent side
+
+morphTo on the child side
+
+Notes:
+
+Accessing related models dynamically uses *_type column
+
+Useful for shared features like comments, images, tags
+
+5. Eager Loading
+
+Definition: Preload related models to reduce N+1 query problem
+
+Key Function: with()
+
+Usage Concept:
+
+Load relationships when querying the parent
+
+Example: Load posts with users to avoid multiple queries
+
+Notes:
+
+Supports nested relationships: with('posts.comments')
+
+Can combine multiple relationships: with(['posts', 'roles'])
+
+Improves performance for collections
+
+6. Quick Reference Table
+Relationship	Method (Parent → Child)	Method (Child → Parent)	Notes / Example
+One-to-One	hasOne	belongsTo	User → Profile
+One-to-Many	hasMany	belongsTo	Category → Products
+Many-to-Many	belongsToMany	belongsToMany	Users ↔ Roles, pivot table required
+One-to-One Polymorphic	morphOne	morphTo	Image → User/Post
+One-to-Many Polymorphic	morphMany	morphTo	Comment → Post/Video/Photo
+Eager Loading	with()	-	Preload relationships to avoid N+1 queries
+7. Quick Tips
+
+Use withCount() to get count of related models without loading full collection
+
+Use nested eager loading for deeper relationships
+
+Polymorphic = flexible but requires careful table design (*_type + *_id)
+
+Many-to-Many pivot can store extra data like role_assigned_at
