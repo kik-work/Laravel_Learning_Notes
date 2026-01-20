@@ -1,0 +1,128 @@
+Laravel Sanctum Cheat Sheet
+1. What is Sanctum?
+
+Lightweight authentication system for:
+
+SPAs (Single Page Applications)
+
+Mobile apps
+
+Simple token-based APIs
+
+Simple alternative to OAuth (does not require Passport)
+
+Supports cookie-based SPA auth and API tokens
+
+2. Core Features
+
+SPA Authentication via cookies & sessions
+
+API Tokens / Personal Access Tokens with optional abilities
+
+Ability/Scope-based permissions
+
+Lightweight, secure, easy to integrate
+
+3. Core Concepts
+Concept	Description
+Personal Access Tokens	Unique tokens linked to a user, stored hashed in DB
+Abilities / Scopes	Permissions associated with a token (create-post, delete-post)
+Guard	SPA uses web guard, API tokens use sanctum guard
+Cookie-based SPA Auth	Session cookie sent with requests, no tokens needed
+API Token Auth	Token sent in Authorization: Bearer <token> header
+4. How It Works
+SPA Flow
+
+SPA sends login request with credentials
+
+Backend validates and sets session cookie
+
+Subsequent requests include cookie
+
+Laravel automatically authenticates user
+
+API Token Flow
+
+User requests token from backend
+
+Backend creates hashed token in DB, associates with user
+
+User sends token in Authorization header
+
+Backend verifies token, checks abilities, authenticates user
+
+5. Database Structure
+
+Table: personal_access_tokens
+
+Column	Purpose
+id	Primary key
+tokenable_type	Model type (usually User)
+tokenable_id	User ID
+name	Token label for identification
+token	Hashed token
+abilities	JSON array of permissions
+last_used_at	Timestamp of last use
+
+SPA auth uses users table + Laravel session
+
+6. Middleware / Route Protection
+Middleware	Purpose
+auth:sanctum	Protect API routes with token auth
+EnsureFrontendRequestsAreStateful	SPA authentication via cookies
+abilities / can	Check token permissions
+7. Abilities / Permissions
+
+Optional, fine-grained control for API tokens
+
+Stored as JSON in DB
+
+Example abilities:
+
+read-posts
+
+create-posts
+
+delete-posts
+
+Usage: token can only perform allowed actions
+
+8. Use Cases
+
+SPA Authentication (cookie-based)
+
+Mobile Apps / Third-Party API Clients
+
+Simple API Token Authentication (no OAuth)
+
+9. Advantages
+
+Simple, lightweight, easy to set up
+
+Secure token storage
+
+SPA cookie support
+
+Ability-based fine-grained permissions
+
+Limitations:
+
+Not suitable for full OAuth scenarios
+
+Advanced token revocation/rotation needs manual handling
+
+✅ Quick Reference Flow Diagram (Conceptual)
+
+[SPA / Mobile App]
+       |
+       | login / token request
+       v
+   [Backend / Laravel]
+       | 
+       | issue session cookie OR personal access token
+       v
+[Authenticated Requests]
+       |
+       | cookie (SPA) OR Authorization header (API token)
+       v
+   [Access Protected Resources]
