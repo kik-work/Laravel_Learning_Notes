@@ -1,0 +1,43 @@
+Laravel Guard
+
+A guard is a condition or check that prevents something from happening unless certain rules are met
+Laravel authentication uses 3 components
+Guard → Provider → Model 
+used for : security, control, and dependency management.
+Types of Guards: AuthGuard, RoleGuard 
+A guard decides whether something is allowed to happen.
+notes: Handles login state
+
+Decides which provider to use
+
+Controls session / token behavior
+
+You can be logged in to multiple guards at once
+
+
+Provider:
+A provider is anything that provides reusable functionality
+Guards consume providers to make decisions
+A provider supplies data, services, or dependencies to other parts of the application.
+->Share logic or data across components,Manage services like:
+Authentication
+API calls
+State management
+Configuration
+notes:
+Usually a database table
+
+Uses a model (User, Admin)
+
+Responsible for fetching user records
+
+Provider → provides data or logic
+Guard → uses that data to make decisions
+
+| Concept         | Guard                  | Provider      |
+| --------------- | ---------------------- | ------------- |
+| Purpose         | Authentication context | User source   |
+| Decides         | Session / driver       | Model / table |
+| Knows password? | ❌ No                   | ✅ Yes         |
+| Example         | `admin`                | `admins`      |
+| Layer           | Higher-level           | Lower-level   |

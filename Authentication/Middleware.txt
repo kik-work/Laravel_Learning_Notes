@@ -1,0 +1,50 @@
+Middleware:
+
+Middleware acts as a filter or layer between:
+
+an incoming HTTP request
+and the application logic (controller)
+
+lifycycle:
+
+Browser Request
+      ↓
+Middleware
+      ↓
+Controller
+      ↓
+Response
+      ↓
+Middleware
+      ↓
+Browser
+
+purpose: 
+
+Middleware is used to:
+
+Authenticate users
+
+Check user roles or permissions
+
+Log requests
+
+Handle CORS
+
+Block or redirect requests
+
+Modify request/response headers
+
+
+
+throttle Middleware (Rate Limiting)
+Route::middleware('throttle:60,1')->group(function () {
+    Route::post('/login', [AuthController::class, 'login']);
+});
+
+
+Meaning:
+
+Max 60 requests
+
+Per 1 minute
