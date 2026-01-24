@@ -1,0 +1,27 @@
+$user->assignRole('admin');        // give role
+$user->removeRole('admin');        // remove role
+$user->syncRoles(['admin']);       // replace all roles
+$user->hasRole('admin');           // true / false
+$user->getRoleNames();             // Collection: ['admin']
+
+$user->givePermissionTo('edit posts');
+$user->revokePermissionTo('edit posts');
+$user->syncPermissions(['edit posts']);
+$user->hasPermissionTo('edit posts');
+
+$user->can('edit posts');           // ✅ checks via role OR direct
+$user->cannot('edit posts');        // opposite
+
+$role->givePermissionTo('edit posts');
+$role->revokePermissionTo('edit posts');
+$role->syncPermissions(['edit posts']);
+$role->hasPermissionTo('edit posts');
+
+$user->assignRole($role);
+->middleware('role:admin')
+
+->middleware('permission:edit posts')
+
+->middleware('role_or_permission:admin|edit posts')
+
+
